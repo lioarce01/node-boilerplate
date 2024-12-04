@@ -16,6 +16,7 @@ A powerful boilerplate for quickly setting up RESTful APIs using Node.js, Expres
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js (v18 or later)
 - npm (v6 or later)
 - Git
@@ -36,47 +37,77 @@ The generated project follows a clean architecture structure:
 
 ```
 my-api/
+├── prisma/
+│   └── schema.prisma
 ├── src/
 │   ├── application/
 │   │   └── use-cases/
+│   ├── config/
 │   ├── domain/
 │   │   ├── entities/
 │   │   └── repositories/
 │   ├── infrastructure/
-│   │   ├── database/
-│   │   │   └── prisma/
-│   │   └── web/
-│   │       └── routes/
+│   │   ├── DI/
+│   │   ├── filters/
+│   │   ├── http/
+│   │   │   ├── controllers/
+│   │   │   └── routes/
+│   │   ├── middlewares/
+│   │   └── repositories/
 │   └── interfaces/
 │       ├── controllers/
 │       └── presenters/
 ├── tests/
 ├── .env
+├── .env.example
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json
+├── Dockerfile
+├── .dockerignore
+├── .prettierrc
 └── README.md
 ```
+
+This structure follows clean architecture principles:
+
+- `prisma/`: Contains Prisma schema and migrations.
+- `src/application/`: Application business rules and use cases.
+- `src/config/`: Configuration files for the application.
+- `src/domain/`: Enterprise business rules, entities, and repository interfaces.
+- `src/infrastructure/`:
+  - `DI/`: Dependency injection setup.
+  - `filters/`: Request/response filters.
+  - `http/`: HTTP-related components.
+    - `controllers/`: Express controllers.
+    - `routes/`: Express routes.
+  - `middlewares/`: Express middlewares.
+  - `repositories/`: Concrete implementations of repository interfaces.
 
 ## Setup
 
 1. Navigate to your project directory:
+
    ```bash
    cd my-api
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Set up your environment variables:
+
    ```bash
    cp .env.example .env
    ```
+
    Edit the `.env` file with your database credentials and other configuration.
 
 4. Generate Prisma client:
+
    ```bash
    npx prisma generate
    ```
@@ -137,8 +168,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or need help, please open an issue in the GitHub repository.
 
 Happy coding! 🚀
+
 ```
 
-This README provides a comprehensive guide for users of your `create-node-hex` boilerplate. It includes sections on features, prerequisites, quick start, project structure, setup instructions, running the application, testing, building for production, contributing guidelines, license information, acknowledgments, and support.
-
-Feel free to adjust any part of this README to better fit your specific boilerplate's features or requirements.
+This updated README incorporates the new project structure and includes the additional files like Dockerfile, .dockerignore, and .prettierrc. It also updates the default port to 4000 and keeps all the other relevant information from the original README.
+```
