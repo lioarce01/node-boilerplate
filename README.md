@@ -54,9 +54,6 @@ my-api/
 │   │   │   └── routes/
 │   │   ├── middlewares/
 │   │   └── repositories/
-│   └── interfaces/
-│       ├── controllers/
-│       └── presenters/
 ├── tests/
 ├── .env
 ├── .env.example
@@ -68,21 +65,6 @@ my-api/
 ├── .prettierrc
 └── README.md
 ```
-
-This structure follows clean architecture principles:
-
-- `prisma/`: Contains Prisma schema and migrations.
-- `src/application/`: Application business rules and use cases.
-- `src/config/`: Configuration files for the application.
-- `src/domain/`: Enterprise business rules, entities, and repository interfaces.
-- `src/infrastructure/`:
-  - `DI/`: Dependency injection setup.
-  - `filters/`: Request/response filters.
-  - `http/`: HTTP-related components.
-    - `controllers/`: Express controllers.
-    - `routes/`: Express routes.
-  - `middlewares/`: Express middlewares.
-  - `repositories/`: Concrete implementations of repository interfaces.
 
 ## Setup
 
@@ -126,14 +108,6 @@ npm run dev
 ```
 
 The API will be available at `http://localhost:4000` by default.
-
-## Testing
-
-Run the test suite:
-
-```bash
-npm test
-```
 
 ## Building for Production
 
