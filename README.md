@@ -16,7 +16,7 @@ A powerful boilerplate for quickly setting up RESTful APIs using Node.js, Expres
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
-- Node.js (v14 or later)
+- Node.js (v18 or later)
 - npm (v6 or later)
 - Git
 
