@@ -1,34 +1,37 @@
 {
   "name": "node-boilerplate",
   "version": "1.0.0",
-  "description": "Node boilerplate to initiliaze express API RESTFul quickly, using clean architeture.",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon --watch src --ext ts --exec \"npm run build && node dist/index.js\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
   },
   "keywords": [],
-  "author": "lioarce01",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.22.0",
-    "express": "^4.20.0",
-    "reflect-metadata": "^0.2.2",
-    "tsyringe": "^4.8.0"
-  },
-  "devDependencies": {
+    "@fastify/jwt": "^9.0.3",
+    "@prisma/client": "^6.3.0",
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/nodemon": "^1.19.6",
+    "@types/jsonwebtoken": "^9.0.8",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "nodemon": "^3.1.7",
-    "prettier": "^3.4.1",
-    "prisma": "^5.22.0",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.7.2"
+    "fastify": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.3.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@fastify/swagger": "^9.4.2",
+    "@types/node": "^22.13.0",
+    "nodemon": "^3.1.9",
+    "prisma-client": "^0.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }
