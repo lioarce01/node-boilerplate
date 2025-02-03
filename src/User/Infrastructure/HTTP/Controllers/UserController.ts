@@ -8,6 +8,8 @@ import DeleteUserUseCase from "../../../Application/UseCases/Delete";
 import { UsecaseToken } from "../../../../Shared/DI/Tokens/DITokens";
 import { User } from "../../../Domain/Entities/User";
 import { ApiResponse } from "../../../../Main/Infrastructure/Utils/APIResponse";
+import { errorResponse, successResponse } from "../../../../Shared/HTTP/ApiResponse";
+import { HTTPError } from "../../../../Shared/Errors/HTTPError";
 
 
 @injectable()
@@ -25,22 +27,19 @@ class UserController
     {
         try {
             const users = await this.listUsersUseCase.execute()
-            const response: ApiResponse<User[]> = {
-                code: 200,
-                status: "SUCCESS",
-                data: users
-            };
 
-            res.status(200).send(response)
+            res.status(200).send(successResponse(users))
 
         } catch (e) {
-            console.error("Error en listUsers:", e)
-            const errResponse: ApiResponse<null> = {
-                code: 500,
-                status: "ERROR",
-                error: "Internal Server Error"
+            if (e instanceof HTTPError) {
+                res.status(e.statusCode).send(errorResponse(e))
+            } else {
+                const unexpectedError = new HTTPError(
+                    500,
+                    "Unexpected error ocurred"
+                )
+                res.status(500).send(errorResponse(unexpectedError))
             }
-            res.status(500).send(errResponse)
         }
     }
 }

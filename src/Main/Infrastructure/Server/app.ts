@@ -4,6 +4,8 @@ import { ErrorHandler } from '../Errors/ErrorHandler'
 import { setupContainer } from '../../../Shared/DI/DIContainer'
 import { APIConfig } from '../../../Shared/Config/serverConfig'
 import routes from "./routesIndex"
+import { errorResponse } from "../../../Shared/HTTP/ApiResponse"
+import { HTTPError } from "../../../Shared/Errors/HTTPError"
 
 setupContainer()
 
@@ -11,8 +13,15 @@ const server = Fastify({ logger: true })
 
 server.register(routes, { prefix: `/api/${APIConfig.VERSION}` })
 
-const errorHandler = new ErrorHandler();
-server.setErrorHandler(errorHandler.handle.bind(errorHandler));
+server.setErrorHandler((error, req, res) =>
+{
+    if (error instanceof HTTPError) {
+        res.status(error.statusCode).send(errorResponse(error));
+    } else {
+        const unexpectedError = new HTTPError(500, "Internal Server Error");
+        res.status(500).send(errorResponse(unexpectedError));
+    }
+});
 
 const start = async () =>
 {
