@@ -3,7 +3,7 @@ import IUserRepository from "../../Domain/Repositories/UserRepository";
 import { User } from "../../Domain/Entities/User";
 import { BasePrismaRepository } from "../../../Main/Infrastructure/Repositories/BasePrismaRepository";
 import UserTransformer from "../Utils/UserTransformer";
-import { CustomError } from "../../../Main/Infrastructure/Errors/CustomError";
+import { NotAuthorizedError, NotFoundError } from "../../../Shared/Errors/HTTPError";
 
 @injectable()
 class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRepository
@@ -33,11 +33,7 @@ class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRe
         const user = await this.prisma.user.findUnique({ where: { sub: sub } })
 
         if (!user) {
-            throw new CustomError(
-                404,
-                "NOT_FOUND",
-                "User not found"
-            );
+            throw new NotFoundError("User not found");
         }
 
         return UserTransformer.toDomain(user);
@@ -67,15 +63,12 @@ class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRe
         const userToUpdate = await this.prisma.user.findUnique({ where: { id: targetId } })
         const updater = await this.prisma.user.findUnique({ where: { sub: authId } })
 
+
         if (!updater || !userToUpdate) {
-            throw new CustomError(
-                404,
-                "NOT_FOUND",
-                "Auth user or target user not found"
-            )
+            throw new NotFoundError("Auth user or Target user not found")
         }
 
-        if (updater.id === userToUpdate.id) {
+        if (updater?.id === userToUpdate?.id) {
             const updatedUser = await this.prisma.user.update({
                 where: {
                     id: targetId
@@ -92,20 +85,25 @@ class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRe
             }
         }
 
-        throw new CustomError(
-            403,
-            "UNAUTHORIZED",
-            "You are not authorized to update this user"
-        )
+        throw new NotAuthorizedError("You are not authorized to update this user")
     }
 
-    async delete(id: string): Promise<{ message: string }>
+    async delete(userId: string, targetId: string): Promise<{ message: string }>
     {
-        const { message } = await this.baseDelete(id)
-
-        return {
-            message
+        const target = await this.prisma.user.findUnique({ where: { id: targetId } })
+        const user = await this.prisma.user.findUnique({ where: { sub: userId } })
+        if (!target) {
+            throw new NotFoundError("User not found")
         }
+
+        if (user?.id === target?.id) {
+            const { message } = await this.baseDelete(targetId)
+
+            return {
+                message
+            }
+        }
+        throw new NotAuthorizedError("You are not authorized to delete this user")
     }
 }
 

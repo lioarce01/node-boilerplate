@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "../../../Shared/Config/prisma";
-import { CustomError } from "../Errors/CustomError";
+import { NotFoundError } from "../../../Shared/Errors/HTTPError";
 
 export abstract class BasePrismaRepository<T>
 {
@@ -11,14 +11,9 @@ export abstract class BasePrismaRepository<T>
     protected handleNotFound(entityId: string, entity?: any): void
     {
         if (!entity) {
-            throw new CustomError(
-                404,
-                "NOT_FOUND",
-                `${this.entityName} with ID ${entityId} not found`
-            )
+            throw new NotFoundError(`Entity ${entity} with ID ${entityId} not found`)
         }
     }
-
 
     protected async getOne(id: string): Promise<any>
     {

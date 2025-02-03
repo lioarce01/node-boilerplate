@@ -13,12 +13,20 @@ export class HTTPError extends Error
     }
 }
 
-// Ejemplos de errores específicos
+//Specific error examples
 export class NotFoundError extends HTTPError
 {
     constructor(message = "Resource not found", details?: any)
     {
         super(HTTP_STATUS.NOT_FOUND, message, details);
+    }
+}
+
+export class NotAuthorizedError extends HTTPError
+{
+    constructor(message = "Unauthorized", details?: any)
+    {
+        super(HTTP_STATUS.UNAUTHORIZED, message, details)
     }
 }
 

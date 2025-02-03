@@ -1,6 +1,5 @@
 import "reflect-metadata"
 import Fastify from 'fastify'
-import { ErrorHandler } from '../Errors/ErrorHandler'
 import { setupContainer } from '../../../Shared/DI/DIContainer'
 import { APIConfig } from '../../../Shared/Config/serverConfig'
 import routes from "./routesIndex"

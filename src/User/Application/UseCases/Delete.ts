@@ -9,9 +9,9 @@ class DeleteUserUseCase
         @inject(RepoToken.UserRepository) private userRepository: IUserRepository
     ) { }
 
-    async execute(id: string): Promise<{ message: string }>
+    async execute(userId: string, targetId: string): Promise<{ message: string }>
     {
-        await this.userRepository.delete(id)
+        await this.userRepository.delete(userId, targetId)
 
         return { message: "User deleted successfully" }
     }
