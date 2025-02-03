@@ -7,6 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node"] 
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

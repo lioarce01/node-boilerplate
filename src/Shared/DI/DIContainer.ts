@@ -6,18 +6,19 @@ import GetOneUserUseCase from '../../User/Application/UseCases/GetOne'
 import GetBySubUseCase from '../../User/Application/UseCases/GetBySub'
 import UpdateUserUseCase from '../../User/Application/UseCases/Update'
 import DeleteUserUseCase from '../../User/Application/UseCases/Delete'
+import { RepoToken, UsecaseToken } from './Tokens/DITokens'
 
 export function setupContainer()
 {
     container.registerSingleton<IUserRepository>(
-        "UserRepository",
+        RepoToken.UserRepository,
         PrismaUserRepository
     )
 }
 
 //REGISTER USE CASES
-container.registerSingleton("ListUsers", ListUsersUseCase)
-container.registerSingleton("GetOne", GetOneUserUseCase)
-container.registerSingleton("GetBySub", GetBySubUseCase)
-container.registerSingleton("UpdateUser", UpdateUserUseCase)
-container.registerSingleton("DeleteUser", DeleteUserUseCase)
+container.registerSingleton(UsecaseToken.User.ListUsers, ListUsersUseCase)
+container.registerSingleton(UsecaseToken.User.GetOneUser, GetOneUserUseCase)
+container.registerSingleton(UsecaseToken.User.GetOneBySub, GetBySubUseCase)
+container.registerSingleton(UsecaseToken.User.UpdateUser, UpdateUserUseCase)
+container.registerSingleton(UsecaseToken.User.DeleteUser, DeleteUserUseCase)

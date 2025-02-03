@@ -1,11 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import IUserRepository from "../../Domain/Repositories/UserRepository";
+import { RepoToken } from "../../../Shared/DI/Tokens/DITokens";
 
 @injectable()
 class DeleteUserUseCase
 {
     constructor(
-        @inject("UserRepository") private userRepository: IUserRepository
+        @inject(RepoToken.UserRepository) private userRepository: IUserRepository
     ) { }
 
     async execute(id: string): Promise<{ message: string }>

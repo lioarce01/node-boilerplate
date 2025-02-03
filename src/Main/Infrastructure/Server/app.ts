@@ -1,13 +1,15 @@
 import "reflect-metadata"
 import Fastify from 'fastify'
-
-import { ErrorHandler } from './Main/Infrastructure/Errors/ErrorHandler'
-import { setupContainer } from './Shared/DI/DIContainer'
-import { APIConfig } from './Shared/Config/serverConfig'
+import { ErrorHandler } from '../Errors/ErrorHandler'
+import { setupContainer } from '../../../Shared/DI/DIContainer'
+import { APIConfig } from '../../../Shared/Config/serverConfig'
+import routes from "./routesIndex"
 
 setupContainer()
 
 const server = Fastify({ logger: true })
+
+server.register(routes, { prefix: `/api/${APIConfig.VERSION}` })
 
 const errorHandler = new ErrorHandler();
 server.setErrorHandler(errorHandler.handle.bind(errorHandler));

@@ -6,7 +6,6 @@ import UserTransformer from "../Utils/UserTransformer";
 import { CustomError } from "../../../Main/Infrastructure/Errors/CustomError";
 
 @injectable()
-
 class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRepository
 {
     public entityName: string = "user";
