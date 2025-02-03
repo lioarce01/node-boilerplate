@@ -1,7 +1,7 @@
 import { User } from "../../Domain/Entities/User"
 import { User as PrismaUser } from "@prisma/client"
 
-class UserTransformer
+export class UserTransformer
 {
     static toDomain(
         user: PrismaUser
@@ -18,5 +18,3 @@ class UserTransformer
         )
     }
 }
-
-export default UserTransformer
