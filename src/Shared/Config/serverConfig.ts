@@ -1,8 +1,10 @@
-import { config } from 'dotenv'
+import { config } from 'dotenv';
 
-config()
+config();
 
-export const APIConfig = {
-    PORT: Number(process.env.PORT),
-    VERSION: "v1"
-}
+const APIConfig = {
+  PORT: Number(process.env.PORT),
+  VERSION: 'v1',
+};
+
+export default APIConfig;

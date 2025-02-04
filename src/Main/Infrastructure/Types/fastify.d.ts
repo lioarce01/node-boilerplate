@@ -1,7 +1,7 @@
-import "fastify";
-import { DependencyContainer } from "tsyringe";
+import 'fastify';
+import { DependencyContainer } from 'tsyringe';
 
-declare module "fastify" {
+declare module 'fastify' {
     interface FastifyInstance
     {
         container: DependencyContainer;

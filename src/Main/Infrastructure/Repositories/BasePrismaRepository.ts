@@ -1,61 +1,62 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { prisma } from "../../../Shared/Config/prisma";
-import { NotFoundError } from "../../../Shared/Errors/HTTPError";
+import { Prisma, PrismaClient } from '@prisma/client';
+import prisma from '../../../Shared/Config/prisma';
+import { NotFoundError } from '../../../Shared/Errors/HTTPError';
 
-export abstract class BasePrismaRepository<T>
+export default abstract class BasePrismaRepository<_T>
 {
-    protected prisma: PrismaClient = prisma
-    protected abstract entityName: string
+  protected prisma: PrismaClient = prisma;
 
+  protected abstract entityName: string
 
-    protected handleNotFound(entityId: string, entity?: any): void
+  protected static handleNotFound(entityId: string, entity?: any): void
+  {
+    if (!entity)
     {
-        if (!entity) {
-            throw new NotFoundError(`Entity ${entity} with ID ${entityId} not found`)
-        }
+      throw new NotFoundError(`Entity with ID ${entityId} not found`);
     }
+  }
 
-    protected async getOne(id: string): Promise<any>
-    {
-        const entity = await (this.prisma as any)[this.entityName].findUnique({
-            where: { id }
-        })
+  protected async getOne(id: string): Promise<any>
+  {
+    const entity = await (this.prisma as any)[this.entityName].findUnique({
+      where: { id },
+    });
 
-        this.handleNotFound(id, entity)
-        return entity
-    }
+    BasePrismaRepository.handleNotFound(id, entity);
+    return entity;
+  }
 
-    protected async list(): Promise<any>
-    {
-        const entityList = await (this.prisma as any)[this.entityName].findMany()
+  protected async list(): Promise<any>
+  {
+    const entityList = await (this.prisma as any)[this.entityName].findMany();
 
-        return entityList
-    }
+    return entityList;
+  }
 
-    protected async baseDelete(id: string): Promise<{ message: string }>
-    {
-        const { message } = await (this.prisma as any)[this.entityName].delete({ where: { id } })
+  protected async baseDelete(id: string): Promise<{ message: string }>
+  {
+    await (this.prisma as any)[this.entityName].delete({ where: { id } });
 
-        return {
-            message: `${this.entityName} with ID ${id} deleted successfully`
-        }
-    }
+    return {
+      message: `${this.entityName} with ID ${id} deleted successfully`,
+    };
+  }
 
-    protected buildPagination(
-        offset: number = 0,
-        limit: number = 10,
-    ): { skip: number; take: number }
-    {
-        return {
-            skip: offset,
-            take: limit
-        }
-    }
+  protected static buildPagination(
+    offset: number = 0,
+    limit: number = 10,
+  ): { skip: number; take: number }
+  {
+    return {
+      skip: offset,
+      take: limit,
+    };
+  }
 
-    protected runTransaction<T>(
-        fn: (prisma: Prisma.TransactionClient) => Promise<T>,
-    ): Promise<T>
-    {
-        return this.prisma.$transaction(fn)
-    }
+  protected runTransaction<U>(
+    fn: (txClient: Prisma.TransactionClient) => Promise<U>,
+  ): Promise<U>
+  {
+    return this.prisma.$transaction(fn);
+  }
 }
