@@ -16,7 +16,8 @@ class GetBySubUseCase
   {
     const result = await this.userRepository.getBySub(sub);
 
-    if (!result) {
+    if (!result)
+    {
       throw new NotFoundError('User not found');
     }
 

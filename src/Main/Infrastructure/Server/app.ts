@@ -14,10 +14,12 @@ server.register(routes, { prefix: `/api/${APIConfig.VERSION}` });
 
 server.setErrorHandler((error, req, res) =>
 {
-  if (error instanceof HTTPError) {
+  if (error instanceof HTTPError)
+  {
     res.status(error.statusCode).send(errorResponse(error));
   }
-  else {
+  else
+  {
     const unexpectedError = new HTTPError(500, 'Internal Server Error');
     res.status(500).send(errorResponse(unexpectedError));
   }
@@ -25,11 +27,13 @@ server.setErrorHandler((error, req, res) =>
 
 const start = async () =>
 {
-  try {
+  try
+  {
     await server.listen({ port: APIConfig.PORT });
     console.log(`Server running on port ${APIConfig.PORT}`);
   }
-  catch (err) {
+  catch (err)
+  {
     server.log.error(err);
     process.exit(1);
   }

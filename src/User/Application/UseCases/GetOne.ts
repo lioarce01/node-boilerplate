@@ -16,7 +16,8 @@ class GetOneUserUseCase
   {
     const result = await this.userRepository.getOne(id);
 
-    if (!result) {
+    if (!result)
+    {
       throw new NotFoundError('User not found');
     }
 

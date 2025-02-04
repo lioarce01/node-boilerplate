@@ -3,7 +3,6 @@ import User from '../../Domain/Entities/User';
 import IUserRepository from '../../Domain/Repositories/UserRepository';
 import BaseUserRepository from './PrismaBaseRepository';
 import UserTransformer from '../Utils/UserTransformer';
-import BasePrismaRepository from '../../../Main/Infrastructure/Repositories/BasePrismaRepository';
 
 @injectable()
 class PrismaUserRepository extends BaseUserRepository implements IUserRepository
