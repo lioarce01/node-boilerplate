@@ -7,6 +7,7 @@ import GetBySubUseCase from '../../User/Application/UseCases/GetBySub';
 import UpdateUserUseCase from '../../User/Application/UseCases/Update';
 import DeleteUserUseCase from '../../User/Application/UseCases/Delete';
 import { RepoToken, UsecaseToken } from './Tokens/DITokens';
+import SaveUserUseCase from '../../User/Application/UseCases/Save';
 
 function setupContainer()
 {
@@ -22,5 +23,6 @@ container.registerSingleton(UsecaseToken.User.GetOneUser, GetOneUserUseCase);
 container.registerSingleton(UsecaseToken.User.GetOneBySub, GetBySubUseCase);
 container.registerSingleton(UsecaseToken.User.UpdateUser, UpdateUserUseCase);
 container.registerSingleton(UsecaseToken.User.DeleteUser, DeleteUserUseCase);
+container.registerSingleton(UsecaseToken.User.SaveUser, SaveUserUseCase);
 
 export default setupContainer;

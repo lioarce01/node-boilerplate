@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { NotAuthorizedError, NotFoundError } from '../../../Shared/Errors/HTTPError';
+import { BadRequestError, NotAuthorizedError, NotFoundError } from '../../../Shared/Errors/HTTPError';
 import User from '../../Domain/Entities/User';
 import UserTransformer from '../Utils/UserTransformer';
 
@@ -25,6 +25,14 @@ export default abstract class BaseUserRepository
 
   protected static checkAuthorization(updaterId: string, targetId: string): void
   {
-    if (updaterId !== targetId) throw new NotAuthorizedError('Not authorized');
+    if (!updaterId || !targetId)
+    {
+      throw new BadRequestError('Invalid user IDs');
+    }
+
+    if (updaterId !== targetId)
+    {
+      throw new NotAuthorizedError('You are not authorized to perform this action');
+    }
   }
 }

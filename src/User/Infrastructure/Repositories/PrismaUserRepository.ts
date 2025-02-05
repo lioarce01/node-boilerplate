@@ -3,6 +3,7 @@ import User from '../../Domain/Entities/User';
 import IUserRepository from '../../Domain/Repositories/UserRepository';
 import BaseUserRepository from './PrismaBaseRepository';
 import UserTransformer from '../Utils/UserTransformer';
+import { NotFoundError } from '../../../Shared/Errors/HTTPError';
 
 @injectable()
 class PrismaUserRepository extends BaseUserRepository implements IUserRepository
@@ -29,8 +30,8 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       where: { sub: user.sub },
       update: {
         email: user.email,
-        picture: user.picture,
         name: user.name,
+        picture: user.picture,
       },
       create: {
         sub: user.sub,
@@ -39,6 +40,7 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
         picture: user.picture,
       },
     });
+
     return UserTransformer.toDomain(prismaUser);
   }
 
@@ -49,6 +51,16 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       this.tryGetBySub(authId),
       this.tryGetById(targetId),
     ]);
+
+    if (!updater?.id)
+    {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!target?.id)
+    {
+      throw new NotFoundError('Target user ID not found');
+    }
 
     PrismaUserRepository.checkAuthorization(updater.id, target.id);
 
@@ -70,10 +82,20 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       this.tryGetById(targetId),
     ]);
 
+    if (!user?.id)
+    {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!target?.id)
+    {
+      throw new NotFoundError('Target user ID not found');
+    }
+
     PrismaUserRepository.checkAuthorization(user.id, target.id);
     await this.prisma.user.delete({ where: { id: targetId } });
 
-    return { message: 'User deleted successfully' };
+    return { message: `User with ID ${targetId} deleted successfully` };
   }
 }
 

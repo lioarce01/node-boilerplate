@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "typeRoots": ["./node_modules/@types", "src/Main/Infrastructure/Types"],
     "types": ["node"] 
   },
   "include": ["src/**/*.ts"],

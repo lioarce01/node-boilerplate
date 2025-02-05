@@ -30,6 +30,14 @@ export class NotAuthorizedError extends HTTPError
   }
 }
 
+export class BadRequestError extends HTTPError
+{
+  constructor(details?: any, message = 'Bad request')
+  {
+    super(HTTP_STATUS.BAD_REQUEST, details, message);
+  }
+}
+
 export class ValidationError extends HTTPError
 {
   constructor(details?: any, message = 'Invalid data')

@@ -55,6 +55,7 @@ export default [
             "no-unused-vars": "off",
             "no-console": "off",
             'max-classes-per-file': 'off',
+            'global-require': 'off',
         },
         settings: {
             'import/resolver': {

@@ -1,37 +1,51 @@
 import Base from '../../../Main/Domain/Entities/Base';
+import UserDTO from '../DTOs/UserDTO';
 
 export default class User extends Base
 {
   constructor(
-    id: string,
-    private _sub: string,
-    private _name: string,
-    private _email: string,
-    private _picture: string,
+    public readonly sub: string,
+    public readonly email: string,
+    public readonly name: string,
+    public readonly picture: string,
     createdAt: Date,
     updatedAt: Date,
+    id?: string,
   )
   {
-    super(id, createdAt, updatedAt);
+    super(createdAt, updatedAt, id);
   }
 
-  get name(): string
+  getSub(): string
   {
-    return this._name;
+    return this.sub;
   }
 
-  get sub(): string
+  getEmail(): string
   {
-    return this._sub;
+    return this.email;
   }
 
-  get email(): string
+  getName(): string
   {
-    return this._email;
+    return this.name;
   }
 
-  get picture(): string
+  getPicture(): string
   {
-    return this._picture;
+    return this.picture;
+  }
+
+  public toDto(): UserDTO
+  {
+    return new UserDTO(
+      this.id ?? '',
+      this.sub,
+      this.name,
+      this.email,
+      this.picture,
+      this.createdAt,
+      this.updatedAt,
+    );
   }
 }

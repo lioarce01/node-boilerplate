@@ -8,6 +8,7 @@ import DeleteUserUseCase from '../../../Application/UseCases/Delete';
 import { UsecaseToken } from '../../../../Shared/DI/Tokens/DITokens';
 import { errorResponse, successResponse } from '../../../../Shared/HTTP/ApiResponse';
 import { HTTPError } from '../../../../Shared/Errors/HTTPError';
+import SaveUserUseCase from '../../../Application/UseCases/Save';
 
 @injectable()
 class UserController
@@ -18,6 +19,7 @@ class UserController
     @inject(UsecaseToken.User.GetOneBySub) private getBySubUseCase: GetBySubUseCase,
     @inject(UsecaseToken.User.UpdateUser) private updateUserUseCase: UpdateUserUseCase,
     @inject(UsecaseToken.User.DeleteUser) private deleteUserUseCase: DeleteUserUseCase,
+    @inject(UsecaseToken.User.SaveUser) private saveUserUseCase: SaveUserUseCase,
   )
   { }
 
@@ -27,22 +29,52 @@ class UserController
     {
       const users = await this.listUsersUseCase.execute();
 
-      res.status(200).send(successResponse(users));
+      return res.status(200).send(successResponse(users));
     }
     catch (e)
     {
       if (e instanceof HTTPError)
       {
-        res.status(e.statusCode).send(errorResponse(e));
+        return res.status(e.statusCode).send(errorResponse(e));
       }
-      else
+
+      const unexpectedError = new HTTPError(
+        500,
+        'Unexpected error ocurred',
+      );
+      return res.status(500).send(errorResponse(unexpectedError));
+    }
+  }
+
+  async createUser(req: FastifyRequest, res: FastifyReply)
+  {
+    try
+    {
+      const {
+        sub, email, picture, name,
+      } = req.user;
+
+      const userDTO = await this.saveUserUseCase.execute({
+        sub,
+        email,
+        name,
+        picture,
+      });
+
+      return res.status(201).send(successResponse(userDTO));
+    }
+    catch (e)
+    {
+      if (e instanceof HTTPError)
       {
-        const unexpectedError = new HTTPError(
-          500,
-          'Unexpected error ocurred',
-        );
-        res.status(500).send(errorResponse(unexpectedError));
+        return res.status(e.statusCode).send(errorResponse(e));
       }
+
+      const unexpectedError = new HTTPError(
+        500,
+        'Unexpected error ocurred',
+      );
+      return res.status(500).send(errorResponse(unexpectedError));
     }
   }
 }

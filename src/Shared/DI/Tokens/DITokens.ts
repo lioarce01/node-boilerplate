@@ -9,5 +9,6 @@ export const UsecaseToken = {
     GetOneBySub: Symbol.for('GetBySub'),
     UpdateUser: Symbol.for('UpdateUser'),
     DeleteUser: Symbol.for('DeleteUser'),
+    SaveUser: Symbol.for('SaveUser'),
   },
 };

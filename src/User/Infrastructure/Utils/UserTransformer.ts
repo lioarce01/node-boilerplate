@@ -8,13 +8,13 @@ class UserTransformer
   ): User
   {
     return new User(
-      user.id,
       user.sub,
-      user.name,
       user.email,
+      user.name,
       user.picture,
       user.createdAt,
       user.updatedAt,
+      user.id,
     );
   }
 }
