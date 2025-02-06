@@ -10,6 +10,15 @@ import { errorResponse, successResponse } from '../../../../Shared/HTTP/ApiRespo
 import { HTTPError } from '../../../../Shared/Errors/HTTPError';
 import SaveUserUseCase from '../../../Application/UseCases/Save';
 
+interface UpdateUserBody 
+{
+  Body: {
+    email: string;
+    picture: string;
+    name: string;
+  };
+}
+
 @injectable()
 class UserController
 {
@@ -25,16 +34,13 @@ class UserController
 
   async listUsers(req: FastifyRequest, res: FastifyReply)
   {
-    try
-    {
+    try {
       const users = await this.listUsersUseCase.execute();
 
       return res.status(200).send(successResponse(users));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -48,8 +54,7 @@ class UserController
 
   async createUser(req: FastifyRequest, res: FastifyReply)
   {
-    try
-    {
+    try {
       const {
         sub, email, picture, name,
       } = req.user;
@@ -63,10 +68,8 @@ class UserController
 
       return res.status(201).send(successResponse(userDTO));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -75,6 +78,34 @@ class UserController
         'Unexpected error ocurred',
       );
       return res.status(500).send(errorResponse(unexpectedError));
+    }
+  }
+
+  async updateUser(req: FastifyRequest<{ Body: UpdateUserBody }>, res: FastifyReply)
+  {
+    try {
+      if (!req.user) {
+        throw new HTTPError(401, 'Unauthorized: Missing user information');
+      }
+
+      const { sub } = req.user;
+      const { email, picture, name } = req.body as any
+
+      if (!email || !picture || !name) {
+        throw new HTTPError(400, 'Bad Request: Missing required fields');
+      }
+
+      const userDTO = await this.updateUserUseCase.execute(sub, { email, picture, name });
+
+      return res.status(200).send(successResponse(userDTO));
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        return res.status(e.statusCode).send(errorResponse(e));
+      }
+
+      console.error('Unexpected error in updateUser:', e);
+
+      return res.status(500).send(errorResponse(new HTTPError(500, 'Unexpected error occurred')));
     }
   }
 }

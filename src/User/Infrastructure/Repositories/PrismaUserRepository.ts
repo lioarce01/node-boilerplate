@@ -4,6 +4,7 @@ import IUserRepository from '../../Domain/Repositories/UserRepository';
 import BaseUserRepository from './PrismaBaseRepository';
 import UserTransformer from '../Utils/UserTransformer';
 import { NotFoundError } from '../../../Shared/Errors/HTTPError';
+import UpdateUserDTO from '../../Domain/DTOs/UpdateUserDTO';
 
 @injectable()
 class PrismaUserRepository extends BaseUserRepository implements IUserRepository
@@ -41,38 +42,18 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       },
     });
 
-    return UserTransformer.toDomain(prismaUser);
+    return this.transformer.toDomain(prismaUser);
   }
 
-  async update(authId: string, targetId: string, data: User):
-    Promise<{ message: string, data: User }>
+  async update(authId: string, data: Partial<User>): Promise<User>
   {
-    const [updater, target] = await Promise.all([
-      this.tryGetBySub(authId),
-      this.tryGetById(targetId),
-    ]);
-
-    if (!updater?.id)
-    {
-      throw new NotFoundError('User not found');
-    }
-
-    if (!target?.id)
-    {
-      throw new NotFoundError('Target user ID not found');
-    }
-
-    PrismaUserRepository.checkAuthorization(updater.id, target.id);
-
+    const { id, createdAt, ...updateData } = data;
     const updatedUser = await this.prisma.user.update({
-      where: { id: targetId },
-      data: { ...data, updatedAt: new Date() },
+      where: { sub: authId },
+      data: { ...updateData, updatedAt: new Date() },
     });
 
-    return {
-      message: 'User updated successfully',
-      data: this.transformer.toDomain(updatedUser),
-    };
+    return this.transformer.toDomain(updatedUser);
   }
 
   async delete(userId: string, targetId: string): Promise<{ message: string }>
@@ -82,13 +63,11 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       this.tryGetById(targetId),
     ]);
 
-    if (!user?.id)
-    {
+    if (!user?.id) {
       throw new NotFoundError('User not found');
     }
 
-    if (!target?.id)
-    {
+    if (!target?.id) {
       throw new NotFoundError('Target user ID not found');
     }
 
