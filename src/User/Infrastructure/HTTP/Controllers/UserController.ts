@@ -108,6 +108,30 @@ class UserController
       return res.status(500).send(errorResponse(new HTTPError(500, 'Unexpected error occurred')));
     }
   }
+
+  async deleteUser(req: FastifyRequest<{ Body: { id: string } }>, res: FastifyReply)
+  {
+    try {
+      const { sub } = req.user
+      const { id } = req.body as any
+      if (!sub) {
+        throw new HTTPError(401, 'Unauthorized: Missing user information');
+      }
+
+      const { message } = await this.deleteUserUseCase.execute(sub, id)
+
+      return res.status(200).send((successResponse(message)))
+
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        return res.status(e.statusCode).send(errorResponse(e));
+      }
+
+      console.error('Unexpected error in updateUser:', e);
+
+      return res.status(500).send(errorResponse(new HTTPError(500, 'Unexpected error occurred')));
+    }
+  }
 }
 
 export default UserController;
