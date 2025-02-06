@@ -47,10 +47,10 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
 
   async update(authId: string, data: Partial<User>): Promise<User>
   {
-    const { id, createdAt, ...updateData } = data;
+    const { id, createdAt, ...updatedData } = data
     const updatedUser = await this.prisma.user.update({
       where: { sub: authId },
-      data: { ...updateData, updatedAt: new Date() },
+      data: { ...updatedData, updatedAt: new Date() },
     });
 
     return this.transformer.toDomain(updatedUser);

@@ -21,7 +21,6 @@ app.register(routes, { prefix: `/api/${APIConfig.VERSION}` });
 
 app.setErrorHandler((error, request: FastifyRequest, reply: FastifyReply) =>
 {
-  // Registrar el error completo en los logs
   console.error('Error occurred:', {
     message: error.message,
     stack: error.stack,
@@ -30,35 +29,28 @@ app.setErrorHandler((error, request: FastifyRequest, reply: FastifyReply) =>
     method: request.method,
   });
 
-  // Manejar errores específicos (HTTPError)
-  if (error instanceof HTTPError)
-  {
+  if (error instanceof HTTPError) {
     reply.status(error.statusCode).send(errorResponse(error));
     return;
   }
 
-  // Manejar errores de Fastify (por ejemplo, validación de esquemas)
-  if (error.validation)
-  {
+  if (error.validation) {
     const validationError = new HTTPError(400, 'Validation Error', error.message);
     reply.status(400).send(errorResponse(validationError));
     return;
   }
 
-  // Manejar errores inesperados
   const unexpectedError = new HTTPError(500, 'Internal Server Error');
   reply.status(500).send(errorResponse(unexpectedError));
 });
 
 const start = async () =>
 {
-  try
-  {
+  try {
     await app.listen({ port: APIConfig.PORT });
     console.log(`Server running on port ${APIConfig.PORT}`);
   }
-  catch (err)
-  {
+  catch (err) {
     app.log.error(err);
     process.exit(1);
   }
