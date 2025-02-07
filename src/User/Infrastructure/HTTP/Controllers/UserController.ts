@@ -11,7 +11,7 @@ import SaveUserUseCase from '../../../Application/UseCases/Save';
 import GetByIdentifier from '../../../Application/UseCases/GetByIdentifier';
 import GetMeUseCase from '../../../Application/UseCases/GetMe';
 
-interface UpdateUserBody 
+interface UpdateUserBody
 {
   Body: {
     email: string;
@@ -30,19 +30,22 @@ class UserController
     @inject(UsecaseToken.User.UpdateUser) private updateUserUseCase: UpdateUserUseCase,
     @inject(UsecaseToken.User.DeleteUser) private deleteUserUseCase: DeleteUserUseCase,
     @inject(UsecaseToken.User.SaveUser) private saveUserUseCase: SaveUserUseCase,
-    @inject(UsecaseToken.User.GetMe) private getMeUseCase: GetMeUseCase
+    @inject(UsecaseToken.User.GetMe) private getMeUseCase: GetMeUseCase,
   )
   { }
 
   async listUsers(req: FastifyRequest, res: FastifyReply)
   {
-    try {
+    try
+    {
       const users = await this.listUsersUseCase.execute();
 
       return res.status(200).send(successResponse(users));
     }
-    catch (e) {
-      if (e instanceof HTTPError) {
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -56,7 +59,8 @@ class UserController
 
   async createUser(req: FastifyRequest, res: FastifyReply)
   {
-    try {
+    try
+    {
       const {
         sub, email, picture, name,
       } = req.user;
@@ -70,8 +74,10 @@ class UserController
 
       return res.status(201).send(successResponse(userDTO));
     }
-    catch (e) {
-      if (e instanceof HTTPError) {
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -85,23 +91,29 @@ class UserController
 
   async updateUser(req: FastifyRequest<{ Body: UpdateUserBody }>, res: FastifyReply)
   {
-    try {
-      if (!req.user) {
+    try
+    {
+      if (!req.user)
+      {
         throw new HTTPError(401, 'Unauthorized: Missing user information');
       }
 
       const { sub } = req.user;
-      const { email, picture, name } = req.body as any
+      const { email, picture, name } = req.body as any;
 
-      if (!email || !picture || !name) {
+      if (!email || !picture || !name)
+      {
         throw new HTTPError(400, 'Bad Request: Missing required fields');
       }
 
       const userDTO = await this.updateUserUseCase.execute(sub, { email, picture, name });
 
       return res.status(200).send(successResponse(userDTO));
-    } catch (e) {
-      if (e instanceof HTTPError) {
+    }
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -113,19 +125,23 @@ class UserController
 
   async deleteUser(req: FastifyRequest<{ Body: { id: string } }>, res: FastifyReply)
   {
-    try {
-      const { sub } = req.user
-      const { id } = req.body as any
-      if (!sub) {
+    try
+    {
+      const { sub } = req.user;
+      const { id } = req.body as any;
+      if (!sub)
+      {
         throw new HTTPError(401, 'Unauthorized: Missing user information');
       }
 
-      const { message } = await this.deleteUserUseCase.execute(sub, id)
+      const { message } = await this.deleteUserUseCase.execute(sub, id);
 
-      return res.status(200).send(successResponse(message))
-
-    } catch (e) {
-      if (e instanceof HTTPError) {
+      return res.status(200).send(successResponse(message));
+    }
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -135,20 +151,23 @@ class UserController
 
   async getByIdentifier(req: FastifyRequest<{ Params: { identifier: string } }>, res: FastifyReply)
   {
-    try {
+    try
+    {
+      const { identifier } = req.params;
 
-      const { identifier } = req.params
-
-      if (!identifier) {
-        throw new HTTPError(404, 'User not found')
+      if (!identifier)
+      {
+        throw new HTTPError(404, 'User not found');
       }
 
-      const user = await this.getByIdentifierUseCase.execute(identifier)
+      const user = await this.getByIdentifierUseCase.execute(identifier);
 
-      return res.status(200).send(successResponse(user))
-
-    } catch (e) {
-      if (e instanceof HTTPError) {
+      return res.status(200).send(successResponse(user));
+    }
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -158,19 +177,23 @@ class UserController
 
   async getMe(req: FastifyRequest, res: FastifyReply)
   {
-    try {
-      const { sub } = req.user
+    try
+    {
+      const { sub } = req.user;
 
-      if (!sub) {
-        throw new HTTPError(404, 'User not found')
+      if (!sub)
+      {
+        throw new HTTPError(404, 'User not found');
       }
 
-      const user = await this.getMeUseCase.execute(sub)
+      const user = await this.getMeUseCase.execute(sub);
 
-      return res.status(200).send(successResponse(user))
-
-    } catch (e) {
-      if (e instanceof HTTPError) {
+      return res.status(200).send(successResponse(user));
+    }
+    catch (e)
+    {
+      if (e instanceof HTTPError)
+      {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -178,7 +201,5 @@ class UserController
     }
   }
 }
-
-
 
 export default UserController;

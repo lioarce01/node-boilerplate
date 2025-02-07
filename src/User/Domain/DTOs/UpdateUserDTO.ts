@@ -3,13 +3,13 @@ import { IsString, IsEmail, IsUrl } from 'class-validator';
 class UpdateUserDTO
 {
     @IsString()
-    name?: string;
+      name?: string;
 
     @IsEmail()
-    email?: string;
+      email?: string;
 
     @IsUrl()
-    picture?: string;
+      picture?: string;
 }
 
 export default UpdateUserDTO;

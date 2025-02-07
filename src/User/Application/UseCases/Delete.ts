@@ -6,7 +6,7 @@ import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
 class DeleteUserUseCase
 {
   constructor(
-        @inject(RepoToken.UserRepository) private userRepository: IUserRepository,
+    @inject(RepoToken.UserRepository) private userRepository: IUserRepository,
   )
   { }
 

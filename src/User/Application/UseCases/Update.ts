@@ -18,8 +18,9 @@ class UpdateUserUseCase
     Promise<UserDTO>
   {
     const existingUser = await this.userRepository.getBySub(userId);
-    if (!existingUser) {
-      throw new HTTPError(404, "User not found")
+    if (!existingUser)
+    {
+      throw new HTTPError(404, 'User not found');
     }
 
     const updatedUser = new User(
@@ -29,7 +30,7 @@ class UpdateUserUseCase
       data.picture ?? existingUser.picture,
       existingUser.createdAt,
       new Date(),
-      existingUser.id
+      existingUser.id,
     );
 
     const result = await this.userRepository.update(userId, updatedUser);

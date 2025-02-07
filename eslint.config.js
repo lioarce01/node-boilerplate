@@ -56,6 +56,9 @@ export default [
             "no-console": "off",
             'max-classes-per-file': 'off',
             'global-require': 'off',
+            'no-return-await': 'off',
+            "no-invalid-this": "off",
+            "@typescript-eslint/no-invalid-this": "off"
         },
         settings: {
             'import/resolver': {

@@ -17,8 +17,7 @@ class GetByIdentifierUseCase
 
     return isObjectId
       ? await this.userRepository.getOne(identifier)
-      : await this.userRepository.getBySub(identifier)
-
+      : await this.userRepository.getBySub(identifier);
   }
 }
 

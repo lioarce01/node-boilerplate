@@ -29,12 +29,14 @@ app.setErrorHandler((error, request: FastifyRequest, reply: FastifyReply) =>
     method: request.method,
   });
 
-  if (error instanceof HTTPError) {
+  if (error instanceof HTTPError)
+  {
     reply.status(error.statusCode).send(errorResponse(error));
     return;
   }
 
-  if (error.validation) {
+  if (error.validation)
+  {
     const validationError = new HTTPError(400, 'Validation Error', error.message);
     reply.status(400).send(errorResponse(validationError));
     return;
@@ -46,11 +48,13 @@ app.setErrorHandler((error, request: FastifyRequest, reply: FastifyReply) =>
 
 const start = async () =>
 {
-  try {
+  try
+  {
     await app.listen({ port: APIConfig.PORT });
     console.log(`Server running on port ${APIConfig.PORT}`);
   }
-  catch (err) {
+  catch (err)
+  {
     app.log.error(err);
     process.exit(1);
   }

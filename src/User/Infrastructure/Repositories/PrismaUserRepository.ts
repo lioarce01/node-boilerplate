@@ -25,7 +25,7 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
 
   async getMe(sub: string): Promise<User>
   {
-    return this.tryGetBySub(sub)
+    return this.tryGetBySub(sub);
   }
 
   async save(user: User): Promise<User>
@@ -50,7 +50,7 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
 
   async update(authId: string, data: Partial<User>): Promise<User>
   {
-    const { id, createdAt, ...updatedData } = data
+    const { id: _id, createdAt: _createdAt, ...updatedData } = data;
     const updatedUser = await this.prisma.user.update({
       where: { sub: authId },
       data: { ...updatedData, updatedAt: new Date() },
@@ -66,11 +66,13 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       this.tryGetById(targetId),
     ]);
 
-    if (!user?.id) {
+    if (!user?.id)
+    {
       throw new NotFoundError('User not found');
     }
 
-    if (!target?.id) {
+    if (!target?.id)
+    {
       throw new NotFoundError('Target user ID not found');
     }
 
