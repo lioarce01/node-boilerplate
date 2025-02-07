@@ -2,9 +2,7 @@ import { injectable } from 'tsyringe';
 import User from '../../Domain/Entities/User';
 import IUserRepository from '../../Domain/Repositories/UserRepository';
 import BaseUserRepository from './PrismaBaseRepository';
-import UserTransformer from '../Utils/UserTransformer';
 import { NotFoundError } from '../../../Shared/Errors/HTTPError';
-import UpdateUserDTO from '../../Domain/DTOs/UpdateUserDTO';
 
 @injectable()
 class PrismaUserRepository extends BaseUserRepository implements IUserRepository

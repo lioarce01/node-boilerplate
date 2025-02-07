@@ -2,27 +2,24 @@ import { inject, injectable } from 'tsyringe';
 import IUserRepository from '../../Domain/Repositories/UserRepository';
 import User from '../../Domain/Entities/User';
 import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import { NotFoundError } from '../../../Shared/Errors/HTTPError';
 
 @injectable()
-class GetBySubUseCase
+class GetByIdentifierUseCase
 {
   constructor(
     @inject(RepoToken.UserRepository) private userRepository: IUserRepository,
   )
   { }
 
-  async execute(sub: string): Promise<User | null>
+  async execute(identifier: string): Promise<User | null>
   {
-    const result = await this.userRepository.getBySub(sub);
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
 
-    if (!result)
-    {
-      throw new NotFoundError('User not found');
-    }
+    return isObjectId
+      ? await this.userRepository.getOne(identifier)
+      : await this.userRepository.getBySub(identifier)
 
-    return result;
   }
 }
 
-export default GetBySubUseCase;
+export default GetByIdentifierUseCase;

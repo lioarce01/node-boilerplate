@@ -6,7 +6,7 @@ export const UsecaseToken = {
   User: {
     ListUsers: Symbol.for('ListUsers'),
     GetOneUser: Symbol.for('GetOne'),
-    GetOneBySub: Symbol.for('GetBySub'),
+    GetByIdentifier: Symbol.for('GetByIdentifier'),
     UpdateUser: Symbol.for('UpdateUser'),
     DeleteUser: Symbol.for('DeleteUser'),
     SaveUser: Symbol.for('SaveUser'),
