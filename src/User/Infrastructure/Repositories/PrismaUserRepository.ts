@@ -23,6 +23,11 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
     return this.tryGetBySub(sub);
   }
 
+  async getMe(sub: string): Promise<User>
+  {
+    return this.tryGetBySub(sub)
+  }
+
   async save(user: User): Promise<User>
   {
     const prismaUser = await this.prisma.user.upsert({

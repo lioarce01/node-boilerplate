@@ -9,6 +9,7 @@ import { errorResponse, successResponse } from '../../../../Shared/HTTP/ApiRespo
 import { HTTPError } from '../../../../Shared/Errors/HTTPError';
 import SaveUserUseCase from '../../../Application/UseCases/Save';
 import GetByIdentifier from '../../../Application/UseCases/GetByIdentifier';
+import GetMeUseCase from '../../../Application/UseCases/GetMe';
 
 interface UpdateUserBody 
 {
@@ -29,6 +30,7 @@ class UserController
     @inject(UsecaseToken.User.UpdateUser) private updateUserUseCase: UpdateUserUseCase,
     @inject(UsecaseToken.User.DeleteUser) private deleteUserUseCase: DeleteUserUseCase,
     @inject(UsecaseToken.User.SaveUser) private saveUserUseCase: SaveUserUseCase,
+    @inject(UsecaseToken.User.GetMe) private getMeUseCase: GetMeUseCase
   )
   { }
 
@@ -142,6 +144,28 @@ class UserController
       }
 
       const user = await this.getByIdentifierUseCase.execute(identifier)
+
+      return res.status(200).send(successResponse(user))
+
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        return res.status(e.statusCode).send(errorResponse(e));
+      }
+
+      return res.status(500).send(errorResponse(new HTTPError(500, 'Unexpected error occurred')));
+    }
+  }
+
+  async getMe(req: FastifyRequest, res: FastifyReply)
+  {
+    try {
+      const { sub } = req.user
+
+      if (!sub) {
+        throw new HTTPError(404, 'User not found')
+      }
+
+      const user = await this.getMeUseCase.execute(sub)
 
       return res.status(200).send(successResponse(user))
 

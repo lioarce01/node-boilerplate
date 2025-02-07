@@ -10,5 +10,6 @@ export const UsecaseToken = {
     UpdateUser: Symbol.for('UpdateUser'),
     DeleteUser: Symbol.for('DeleteUser'),
     SaveUser: Symbol.for('SaveUser'),
+    GetMe: Symbol.for('GetMe')
   },
 };
