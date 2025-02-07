@@ -3,11 +3,12 @@ import { HTTP_STATUS, HTTP_MESSAGES } from './StatusCode';
 
 export interface ApiResponse<T = any>
 {
-    code: number;
-    status: string;
-    data?: T;
-    error?: string;
-    details?: any;
+  code: number;
+  status: string;
+  data?: T;
+  error?: string;
+  details?: any;
+  totalCount?: number
 }
 
 export function successResponse<T>(data?: T): ApiResponse<T>

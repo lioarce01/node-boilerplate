@@ -10,6 +10,7 @@ import { HTTPError } from '../../../../Shared/Errors/HTTPError';
 import SaveUserUseCase from '../../../Application/UseCases/Save';
 import GetByIdentifier from '../../../Application/UseCases/GetByIdentifier';
 import GetMeUseCase from '../../../Application/UseCases/GetMe';
+import Criteria from '../../../../Main/Infrastructure/Criteria/Criteria';
 
 interface UpdateUserBody
 {
@@ -36,16 +37,15 @@ class UserController
 
   async listUsers(req: FastifyRequest, res: FastifyReply)
   {
-    try
-    {
-      const users = await this.listUsersUseCase.execute();
+    try {
+      const criteria = Criteria.fromQueryParams(req.query)
+
+      const users = await this.listUsersUseCase.execute(criteria);
 
       return res.status(200).send(successResponse(users));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -59,8 +59,7 @@ class UserController
 
   async createUser(req: FastifyRequest, res: FastifyReply)
   {
-    try
-    {
+    try {
       const {
         sub, email, picture, name,
       } = req.user;
@@ -74,10 +73,8 @@ class UserController
 
       return res.status(201).send(successResponse(userDTO));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -91,18 +88,15 @@ class UserController
 
   async updateUser(req: FastifyRequest<{ Body: UpdateUserBody }>, res: FastifyReply)
   {
-    try
-    {
-      if (!req.user)
-      {
+    try {
+      if (!req.user) {
         throw new HTTPError(401, 'Unauthorized: Missing user information');
       }
 
       const { sub } = req.user;
       const { email, picture, name } = req.body as any;
 
-      if (!email || !picture || !name)
-      {
+      if (!email || !picture || !name) {
         throw new HTTPError(400, 'Bad Request: Missing required fields');
       }
 
@@ -110,10 +104,8 @@ class UserController
 
       return res.status(200).send(successResponse(userDTO));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -125,12 +117,10 @@ class UserController
 
   async deleteUser(req: FastifyRequest<{ Body: { id: string } }>, res: FastifyReply)
   {
-    try
-    {
+    try {
       const { sub } = req.user;
       const { id } = req.body as any;
-      if (!sub)
-      {
+      if (!sub) {
         throw new HTTPError(401, 'Unauthorized: Missing user information');
       }
 
@@ -138,10 +128,8 @@ class UserController
 
       return res.status(200).send(successResponse(message));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -151,12 +139,10 @@ class UserController
 
   async getByIdentifier(req: FastifyRequest<{ Params: { identifier: string } }>, res: FastifyReply)
   {
-    try
-    {
+    try {
       const { identifier } = req.params;
 
-      if (!identifier)
-      {
+      if (!identifier) {
         throw new HTTPError(404, 'User not found');
       }
 
@@ -164,10 +150,8 @@ class UserController
 
       return res.status(200).send(successResponse(user));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 
@@ -177,12 +161,10 @@ class UserController
 
   async getMe(req: FastifyRequest, res: FastifyReply)
   {
-    try
-    {
+    try {
       const { sub } = req.user;
 
-      if (!sub)
-      {
+      if (!sub) {
         throw new HTTPError(404, 'User not found');
       }
 
@@ -190,10 +172,8 @@ class UserController
 
       return res.status(200).send(successResponse(user));
     }
-    catch (e)
-    {
-      if (e instanceof HTTPError)
-      {
+    catch (e) {
+      if (e instanceof HTTPError) {
         return res.status(e.statusCode).send(errorResponse(e));
       }
 

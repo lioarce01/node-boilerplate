@@ -1,15 +1,24 @@
 import { injectable } from 'tsyringe';
 import User from '../../Domain/Entities/User';
 import IUserRepository from '../../Domain/Repositories/UserRepository';
-import BaseUserRepository from './PrismaBaseRepository';
 import { NotFoundError } from '../../../Shared/Errors/HTTPError';
+import BasePrismaRepository from '../../../Main/Infrastructure/Repositories/BasePrismaRepository';
+import Criteria from '../../../Main/Infrastructure/Criteria/Criteria';
 
 @injectable()
-class PrismaUserRepository extends BaseUserRepository implements IUserRepository
+class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRepository
 {
-  async list(): Promise<User[]>
+  protected entityName: string;
+  constructor()
   {
-    const users = await this.prisma.user.findMany();
+    super();
+    this.entityName = 'user';
+  }
+
+  async list(criteria: Criteria): Promise<User[]>
+  {
+    const queryOptions = this.applyCriteria(criteria)
+    const users = await this.prisma.user.findMany(queryOptions);
     return users.map(this.transformer.toDomain);
   }
 
@@ -66,13 +75,11 @@ class PrismaUserRepository extends BaseUserRepository implements IUserRepository
       this.tryGetById(targetId),
     ]);
 
-    if (!user?.id)
-    {
+    if (!user?.id) {
       throw new NotFoundError('User not found');
     }
 
-    if (!target?.id)
-    {
+    if (!target?.id) {
       throw new NotFoundError('Target user ID not found');
     }
 
