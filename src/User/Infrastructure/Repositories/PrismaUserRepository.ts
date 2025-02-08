@@ -41,9 +41,7 @@ class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRe
     const prismaUser = await this.prisma.user.upsert({
       where: { sub: user.sub },
       update: {
-        email: user.email,
-        name: user.name,
-        picture: user.picture,
+
       },
       create: {
         sub: user.sub,
