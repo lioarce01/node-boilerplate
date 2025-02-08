@@ -8,8 +8,8 @@ class OpenAIService implements IAIService
     constructor()
     {
         this.openai = new OpenAI({
-            baseURL: AIAPI.DeekSeepBaseURL,
-            apiKey: AIAPI.DeepSeekAPIKey
+            // baseURL: AIAPI.DeekSeepBaseURL,
+            apiKey: AIAPI.OpenAIAPIKey
         })
     }
 
@@ -18,7 +18,7 @@ class OpenAIService implements IAIService
         try {
             const response = await this.openai.chat.completions.create({
                 messages: [{ role: 'user', content: message }],
-                model: 'deepseek-chat'
+                model: 'gpt-3.5-turbo'
             });
 
             return {
