@@ -11,6 +11,9 @@ import GetOneUserUseCase from '../../User/Application/UseCases/GetOne';
 import GetMeUseCase from '../../User/Application/UseCases/GetMe';
 import ICacheRepository from '../../Cache/Domain/Repositories/ICacheRepository';
 import RedisCacheRepository from '../../Cache/Infrastructure/Repositories/RedisCacheRepository';
+import IAIService from '../../AI/Domain/Repositories/IAIRepository';
+import OpenAIService from '../../AI/Infrastructure/Repositories/OpenAIService';
+import ChatUseCase from '../../AI/Application/Usecases/AIChat';
 
 function setupContainer()
 {
@@ -26,7 +29,15 @@ function setupContainer()
     RedisCacheRepository,
   );
 
-  // REGISTER USE CASES
+  container.registerSingleton<IAIService>(
+    RepoToken.AIRepository,
+    OpenAIService
+  )
+
+  // REGISTR AI USE CASES
+  container.registerSingleton(UsecaseToken.AI.SendMessage, ChatUseCase)
+
+  // REGISTER USER USE CASES
   container.registerSingleton(UsecaseToken.User.ListUsers, ListUsersUseCase);
   container.registerSingleton(UsecaseToken.User.GetOneUser, GetOneUserUseCase);
   container.registerSingleton(UsecaseToken.User.GetByIdentifier, GetByIdentifierUseCase);

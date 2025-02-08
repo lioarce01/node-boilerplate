@@ -1,11 +1,12 @@
 import { FastifyInstance } from 'fastify';
 import userRoutes from '../../../User/Infrastructure/HTTP/Routes/UserRoutes';
 import setupContainer from '../../../Shared/DI/DIContainer';
+import chatRoutes from '../../../AI/Infrastructure/HTTP/Routes/ChatRoutes';
 
 export default async function routes(fastify: FastifyInstance)
 {
   setupContainer();
-  // all entities routes
+  // all entities/services routes
   fastify.register(userRoutes, { prefix: '/users' });
-  // fastify.register(productsRoutes, { prefix: "/products" })  //EXAMPLE!
+  fastify.register(chatRoutes, { prefix: '/chat' })
 }

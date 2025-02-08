@@ -1,6 +1,7 @@
 export const RepoToken = {
   UserRepository: Symbol.for('UserRepository'),
   CacheRepository: Symbol.for('CacheRepository'),
+  AIRepository: Symbol.for('AIRepository')
 };
 
 export const UsecaseToken = {
@@ -13,4 +14,8 @@ export const UsecaseToken = {
     SaveUser: Symbol.for('SaveUser'),
     GetMe: Symbol.for('GetMe'),
   },
+
+  AI: {
+    SendMessage: Symbol.for('SendMessage')
+  }
 };
