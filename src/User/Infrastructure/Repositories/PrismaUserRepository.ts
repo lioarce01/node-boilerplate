@@ -17,9 +17,7 @@ class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRe
 
   async list(criteria: Criteria): Promise<User[]>
   {
-    const queryOptions = this.applyCriteria(criteria)
-    const users = await this.prisma.user.findMany(queryOptions);
-    return users.map(this.transformer.toDomain);
+    return this.list(criteria)
   }
 
   async getOne(id: string): Promise<User>

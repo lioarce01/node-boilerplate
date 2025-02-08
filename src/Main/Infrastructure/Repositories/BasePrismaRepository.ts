@@ -37,9 +37,10 @@ export default abstract class BasePrismaRepository<_T>
 
   protected async list(criteria: Criteria): Promise<any>
   {
-    const entityList = await (this.prisma as any)[this.entityName].findMany();
+    const queryOptions = this.applyCriteria(criteria)
+    const entityList = await (this.prisma as any)[this.entityName].findMany(queryOptions);
 
-    return entityList;
+    return entityList.map(this.transformer.toDomain);
   }
 
   protected async baseDelete(id: string): Promise<{ message: string }>
