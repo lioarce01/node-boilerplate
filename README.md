@@ -55,44 +55,9 @@ Directory structure:
     │   └── schema.prisma
     └── src/
         ├── Auth/
-        │   ├── Plugins/
-        │   ├── Types/
-        │   └── Utils/
         ├── Cache/
-        │   ├── Application/
-        │   │   └── Services/
-        │   ├── Domain/
-        │   │   └── Repositories/
-        │   └── Infrastructure/
-        │       └── Repositories/
         ├── Main/
-        │   ├── Domain/
-        │   │   ├── Entities/
-        │   │   │   ├── Base.ts
-        │   │   │   └── Tokens/
-        │   │   └── Repositories/
-        │   └── Infrastructure/
-        │       ├── Criteria/
-        │       ├── Errors/
-        │       ├── Repositories/
-        │       ├── Server/
-        │       │   ├── app.ts
-        │       ├── Types/
-        │       └── Utils/
         ├── Shared/
-        │   ├── Config/
-        │   │   ├── prisma.ts
-        │   │   ├── redisConfig.ts
-        │   │   ├── serverConfig.ts
-        │   │   └── swaggerConfig.ts
-        │   ├── DI/
-        │   │   ├── DIContainer.ts
-        │   ├── Errors/
-        │   │   └── HTTPError.ts
-        │   ├── HTTP/
-        │   │   ├── ApiResponse.ts
-        │   │   └── StatusCode.ts
-        │   └── Schemas/
         └── User/
             ├── Application/
             ├── Domain/
