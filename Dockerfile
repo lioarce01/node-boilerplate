@@ -1,29 +1,26 @@
-# Use the official Node.js image as a base image
-FROM node:18
+FROM node:18-alpine AS builder
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Copy package.json and pnpm-lock.yaml (if present) to the container
 COPY package*.json ./
 
-# Install dependencies
-RUN pnpm install
+RUN pnpm install --only=production
 
-# Copy the rest of the app's source code to the container
 COPY . .
 
-# Run Prisma Generate to Generate types
-RUN pnpx prisma generate
-
-# Build the TypeScript code (if applicable)
 RUN pnpm run build
 
-# Expose the port the app runs on
+RUN rm -rf node_modules && pnpm install --only=production
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
 EXPOSE 4000
 
-# Define the command to run the app
-CMD ["node", "dist/index.js"]
+# Start the server
+CMD ["node", "dist/Main/Infrastructure/Server/app.js"]
