@@ -9,7 +9,7 @@ export default abstract class BasePrismaRepository<_T>
 {
   protected prisma: PrismaClient = prisma;
 
-  protected abstract entityName: string
+  protected abstract entityName: symbol
 
   protected transformer = UserTransformer;
 
@@ -48,7 +48,7 @@ export default abstract class BasePrismaRepository<_T>
     await (this.prisma as any)[this.entityName].delete({ where: { id } });
 
     return {
-      message: `${this.entityName} with ID ${id} deleted successfully`,
+      message: `${String(this.entityName)} with ID ${id} deleted successfully`,
     };
   }
 

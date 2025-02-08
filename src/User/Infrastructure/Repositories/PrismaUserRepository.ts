@@ -4,15 +4,16 @@ import IUserRepository from '../../Domain/Repositories/UserRepository';
 import { NotFoundError } from '../../../Shared/Errors/HTTPError';
 import BasePrismaRepository from '../../../Main/Infrastructure/Repositories/BasePrismaRepository';
 import Criteria from '../../../Main/Infrastructure/Criteria/Criteria';
+import EntityToken from '../../../Main/Domain/Entities/Tokens/EntityToken';
 
 @injectable()
 class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRepository
 {
-  protected entityName: string;
+  protected entityName: symbol;
   constructor()
   {
     super();
-    this.entityName = 'user';
+    this.entityName = EntityToken.User;
   }
 
   async list(criteria: Criteria): Promise<User[]>
