@@ -1,9 +1,10 @@
+import ICacheRepository from '@Cache/Domain/Repositories/ICacheRepository';
+import Criteria from '@Main/Infrastructure/Criteria/Criteria';
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import User from '@User/Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import User from '../../Domain/Entities/User';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import ICacheRepository from '../../../Cache/Domain/Repositories/ICacheRepository';
-import Criteria from '../../../Main/Infrastructure/Criteria/Criteria';
+
 
 @injectable()
 class ListUsersUseCase

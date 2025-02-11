@@ -1,8 +1,9 @@
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import { NotFoundError } from '@Shared/Errors/HTTPError';
+import User from '@User/Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
-import User from '../../Domain/Entities/User';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import { NotFoundError } from '../../../Shared/Errors/HTTPError';
+
 
 @injectable()
 class GetOneUserUseCase
@@ -16,8 +17,7 @@ class GetOneUserUseCase
   {
     const result = await this.userRepository.getOne(id);
 
-    if (!result)
-    {
+    if (!result) {
       throw new NotFoundError('User not found');
     }
 

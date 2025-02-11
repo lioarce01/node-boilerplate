@@ -1,6 +1,6 @@
 {
-    "watch": ["src/**/*"],
-    "ext": "ts",
-    "exec": "ts-node src/Main/Infrastructure/Server/app.ts",
-    "ignore": ["node_modules"]
-  }
+  "watch": ["src"],
+  "ext": "ts",
+  "exec": "ts-node -r tsconfig-paths/register src/Main/Infrastructure/Server/app.ts",
+  "ignore": ["node_modules"]
+}

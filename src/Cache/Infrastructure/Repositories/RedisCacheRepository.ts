@@ -1,7 +1,8 @@
+import ICacheRepository from '@Cache/Domain/Repositories/ICacheRepository';
+import redisConfig from '@Shared/Config/redisConfig';
 import { createClient, RedisClientType } from 'redis';
 import { injectable } from 'tsyringe';
-import ICacheRepository from '../../Domain/Repositories/ICacheRepository';
-import redisConfig from '../../../Shared/Config/redisConfig';
+
 
 @injectable()
 class RedisCacheRepository implements ICacheRepository
@@ -33,8 +34,7 @@ class RedisCacheRepository implements ICacheRepository
   async set(key: string, value: string, ttl?: number): Promise<void>
   {
     await this.client.set(key, value);
-    if (ttl)
-    {
+    if (ttl) {
       await this.client.expire(key, ttl);
     }
   }

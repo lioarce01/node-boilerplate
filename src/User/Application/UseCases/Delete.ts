@@ -1,6 +1,7 @@
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
+
 
 @injectable()
 class DeleteUserUseCase

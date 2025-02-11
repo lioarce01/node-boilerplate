@@ -1,7 +1,8 @@
+import ICacheRepository from "@Cache/Domain/Repositories/ICacheRepository";
+import { RepoToken } from "@Shared/DI/Tokens/DITokens";
 import "reflect-metadata"
 import { injectable, inject } from "tsyringe";
-import ICacheRepository from "../../Domain/Repositories/ICacheRepository"
-import { RepoToken } from "../../../Shared/DI/Tokens/DITokens"
+
 
 @injectable()
 class CacheService

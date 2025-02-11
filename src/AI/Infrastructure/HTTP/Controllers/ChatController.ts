@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { UsecaseToken } from "../../../../Shared/DI/Tokens/DITokens";
-import ChatUseCase from "../../../Application/Usecases/AIChat";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HTTPError } from "../../../../Shared/Errors/HTTPError";
-import { errorResponse, successResponse } from "../../../../Shared/HTTP/ApiResponse";
+import { UsecaseToken } from "@Shared/DI/Tokens/DITokens";
+import ChatUseCase from "@AI/Application/Usecases/AIChat";
+import { errorResponse, successResponse } from "@Shared/HTTP/ApiResponse";
+import { HTTPError } from "@Shared/Errors/HTTPError";
 
 @injectable()
 class ChatController

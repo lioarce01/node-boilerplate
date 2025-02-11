@@ -1,9 +1,10 @@
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import CreateUserDTO from '@User/Domain/DTOs/CreateUserDTO';
+import UserDTO from '@User/Domain/DTOs/UserDTO';
+import User from '@User/Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import User from '../../Domain/Entities/User';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import CreateUserDTO from '../../Domain/DTOs/CreateUserDTO';
-import UserDTO from '../../Domain/DTOs/UserDTO';
+
 
 @injectable()
 class SaveUserUseCase

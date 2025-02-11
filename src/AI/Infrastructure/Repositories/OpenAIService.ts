@@ -1,6 +1,6 @@
-import IAIService from "../../Domain/Repositories/IAIRepository";
 import OpenAI from "openai";
-import AIAPI from "../Utils/AIAPIKey";
+import IAIService from "@AI/Domain/Repositories/IAIRepository";
+import AIAPI from "@AI/Infrastructure/Utils/AIAPIKey";
 
 class OpenAIService implements IAIService
 {

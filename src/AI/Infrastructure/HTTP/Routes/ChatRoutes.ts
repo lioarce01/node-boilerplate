@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { container } from "tsyringe";
 import ChatController from "../Controllers/ChatController";
-import { ChatRequestSchema, ChatResponseSchema } from "../../../Domain/Schemas/MessageSchema";
+import { ChatRequestSchema, ChatResponseSchema } from "@AI/Domain/Schemas/MessageSchema";
 
 
 export default async function chatRoutes(fastify: FastifyInstance)

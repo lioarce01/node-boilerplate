@@ -1,9 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import prisma from '../../../Shared/Config/prisma';
-import { BadRequestError, NotAuthorizedError, NotFoundError } from '../../../Shared/Errors/HTTPError';
+import prisma from '@Shared/Config/prisma';
+import { BadRequestError, NotAuthorizedError, NotFoundError } from '@Shared/Errors/HTTPError';
+import User from '@User/Domain/Entities/User';
+import UserTransformer from '@User/Infrastructure/Utils/UserTransformer';
 import Criteria from '../Criteria/Criteria';
-import UserTransformer from '../../../User/Infrastructure/Utils/UserTransformer';
-import User from '../../../User/Domain/Entities/User';
+
 
 export default abstract class BasePrismaRepository<_T>
 {

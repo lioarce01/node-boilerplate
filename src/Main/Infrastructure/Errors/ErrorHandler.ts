@@ -1,6 +1,7 @@
+import { HTTPError } from '@Shared/Errors/HTTPError';
+import { errorResponse } from '@Shared/HTTP/ApiResponse';
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { errorResponse } from '../../../Shared/HTTP/ApiResponse';
-import { HTTPError } from '../../../Shared/Errors/HTTPError';
+
 
 export function errorHandler(
     error: FastifyError,

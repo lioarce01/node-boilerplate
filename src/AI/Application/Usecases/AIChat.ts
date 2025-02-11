@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe"
-import { RepoToken } from "../../../Shared/DI/Tokens/DITokens"
-import IAIService from "../../Domain/Repositories/IAIRepository"
+import { RepoToken } from "@Shared/DI/Tokens/DITokens"
+import IAIService from "@AI/Domain/Repositories/IAIRepository"
 @injectable()
 class ChatUseCase
 {

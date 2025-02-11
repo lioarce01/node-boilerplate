@@ -1,5 +1,6 @@
-import IBaseRepository from '../../../Main/Domain/Repositories/IBaseRepository';
-import User from '../Entities/User';
+import IBaseRepository from "@Main/Domain/Repositories/IBaseRepository";
+import User from "@User/Domain/Entities/User";
+
 
 interface IUserRepository extends IBaseRepository<User>
 {

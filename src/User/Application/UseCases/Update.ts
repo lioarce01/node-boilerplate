@@ -1,10 +1,11 @@
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import { HTTPError } from '@Shared/Errors/HTTPError';
+import UpdateUserDTO from '@User/Domain/DTOs/UpdateUserDTO';
+import UserDTO from '@User/Domain/DTOs/UserDTO';
+import User from '@User/Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { inject, injectable } from 'tsyringe';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import UpdateUserDTO from '../../Domain/DTOs/UpdateUserDTO';
-import UserDTO from '../../Domain/DTOs/UserDTO';
-import User from '../../Domain/Entities/User';
-import { HTTPError } from '../../../Shared/Errors/HTTPError';
+
 
 @injectable()
 class UpdateUserUseCase
@@ -18,8 +19,7 @@ class UpdateUserUseCase
     Promise<UserDTO>
   {
     const existingUser = await this.userRepository.getBySub(userId);
-    if (!existingUser)
-    {
+    if (!existingUser) {
       throw new HTTPError(404, 'User not found');
     }
 

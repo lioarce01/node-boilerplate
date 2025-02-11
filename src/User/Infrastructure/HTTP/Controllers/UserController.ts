@@ -1,16 +1,17 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
 import { inject, injectable } from 'tsyringe';
-import ListUsersUseCase from '../../../Application/UseCases/List';
-import GetOneUserUseCase from '../../../Application/UseCases/GetOne';
-import UpdateUserUseCase from '../../../Application/UseCases/Update';
-import DeleteUserUseCase from '../../../Application/UseCases/Delete';
-import { UsecaseToken } from '../../../../Shared/DI/Tokens/DITokens';
-import { errorResponse, successResponse } from '../../../../Shared/HTTP/ApiResponse';
-import { HTTPError } from '../../../../Shared/Errors/HTTPError';
-import SaveUserUseCase from '../../../Application/UseCases/Save';
-import GetByIdentifier from '../../../Application/UseCases/GetByIdentifier';
-import GetMeUseCase from '../../../Application/UseCases/GetMe';
-import Criteria from '../../../../Main/Infrastructure/Criteria/Criteria';
+import { FastifyRequest, FastifyReply } from 'fastify';
+import Criteria from '@Main/Infrastructure/Criteria/Criteria';
+import { HTTPError } from '@Shared/Errors/HTTPError';
+import { errorResponse, successResponse } from '@Shared/HTTP/ApiResponse';
+import { UsecaseToken } from '@Shared/DI/Tokens/DITokens';
+import DeleteUserUseCase from '@User/Application/UseCases/Delete';
+import GetByIdentifierUseCase from '@User/Application/UseCases/GetByIdentifier';
+import GetMeUseCase from '@User/Application/UseCases/GetMe';
+import GetOneUserUseCase from '@User/Application/UseCases/GetOne';
+import ListUsersUseCase from '@User/Application/UseCases/List';
+import SaveUserUseCase from '@User/Application/UseCases/Save';
+import UpdateUserUseCase from '@User/Application/UseCases/Update';
+
 
 interface UpdateUserBody
 {
@@ -27,7 +28,7 @@ class UserController
   constructor(
     @inject(UsecaseToken.User.ListUsers) private listUsersUseCase: ListUsersUseCase,
     @inject(UsecaseToken.User.GetOneUser) private getOneUseCase: GetOneUserUseCase,
-    @inject(UsecaseToken.User.GetByIdentifier) private getByIdentifierUseCase: GetByIdentifier,
+    @inject(UsecaseToken.User.GetByIdentifier) private getByIdentifierUseCase: GetByIdentifierUseCase,
     @inject(UsecaseToken.User.UpdateUser) private updateUserUseCase: UpdateUserUseCase,
     @inject(UsecaseToken.User.DeleteUser) private deleteUserUseCase: DeleteUserUseCase,
     @inject(UsecaseToken.User.SaveUser) private saveUserUseCase: SaveUserUseCase,
