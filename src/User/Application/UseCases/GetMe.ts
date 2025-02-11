@@ -1,14 +1,14 @@
 import { inject, injectable } from 'tsyringe';
-import { RepoToken } from '../../../Shared/DI/Tokens/DITokens';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import { NotFoundError } from '../../../Shared/Errors/HTTPError';
-import User from '../../Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
+import { NotFoundError } from '@Shared/Errors/HTTPError';
+import { RepoToken } from '@Shared/DI/Tokens/DITokens';
+import User from '@User/Domain/Entities/User';
 
 @injectable()
 class GetMeUseCase
 {
   constructor(
-        @inject(RepoToken.UserRepository) private userRepository: IUserRepository,
+    @inject(RepoToken.UserRepository) private userRepository: IUserRepository,
   )
   { }
 
@@ -16,8 +16,7 @@ class GetMeUseCase
   {
     const result = await this.userRepository.getMe(id);
 
-    if (!result)
-    {
+    if (!result) {
       throw new NotFoundError('User not found');
     }
 

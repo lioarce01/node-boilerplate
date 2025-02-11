@@ -1,4 +1,4 @@
-import Criteria from "../../Infrastructure/Criteria/Criteria";
+import Criteria from "@Main/Infrastructure/Criteria/Criteria";
 
 interface IBaseRepository<T>
 {

@@ -1,5 +1,5 @@
 import { User as PrismaUser } from '@prisma/client';
-import User from '../../Domain/Entities/User';
+import User from '@User/Domain/Entities/User';
 
 class UserTransformer
 {

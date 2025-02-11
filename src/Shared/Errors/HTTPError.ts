@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '../HTTP/StatusCode';
+import { HTTP_STATUS } from "@Shared/HTTP/StatusCode";
 
 export class HTTPError extends Error
 {

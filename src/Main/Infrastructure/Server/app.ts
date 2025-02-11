@@ -1,19 +1,19 @@
 import 'reflect-metadata';
 import Fastify from 'fastify';
 
-import setupContainer from '../../../Shared/DI/DIContainer';
-
-import swagger from '@fastify/swagger'
-import swaggerUI from '@fastify/swagger-ui'
-
-import APIConfig from '../../../Shared/Config/serverConfig';
 import routes from './routesIndex';
-
-import AuthPlugin from '../../../Auth/Plugins/AuthPlugin';
+import AuthPlugin from '@Auth/Plugins/AuthPlugin';
 
 import fastifyHelmet from '@fastify/helmet';
-import { errorHandler } from '../Errors/ErrorHandler';
-import { setupSwagger } from '../../../Shared/Config/swaggerConfig';
+
+import setupContainer from '@Shared/DI/DIContainer';
+
+import { setupSwagger } from '@Shared/Config/swaggerConfig';
+
+import { errorHandler } from '@Main/Infrastructure/Errors/ErrorHandler';
+
+import APIConfig from '@Shared/Config/serverConfig';
+
 
 setupContainer();
 

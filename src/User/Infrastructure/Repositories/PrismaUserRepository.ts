@@ -1,10 +1,11 @@
+import EntityToken from '@Main/Domain/Entities/Tokens/EntityToken';
+import Criteria from '@Main/Infrastructure/Criteria/Criteria';
+import BasePrismaRepository from '@Main/Infrastructure/Repositories/BasePrismaRepository';
+import { NotFoundError } from '@Shared/Errors/HTTPError';
+import User from '@User/Domain/Entities/User';
+import IUserRepository from '@User/Domain/Repositories/UserRepository';
 import { injectable } from 'tsyringe';
-import User from '../../Domain/Entities/User';
-import IUserRepository from '../../Domain/Repositories/UserRepository';
-import { NotFoundError } from '../../../Shared/Errors/HTTPError';
-import BasePrismaRepository from '../../../Main/Infrastructure/Repositories/BasePrismaRepository';
-import Criteria from '../../../Main/Infrastructure/Criteria/Criteria';
-import EntityToken from '../../../Main/Domain/Entities/Tokens/EntityToken';
+
 
 @injectable()
 class PrismaUserRepository extends BasePrismaRepository<User> implements IUserRepository

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { container } from 'tsyringe';
-import UserController from '../Controllers/UserController';
-import { CreateUserSchema, DeleteUserSchema, GetMeSchema, GetUserByIdSchema, ListUsersSchema, UpdateUserSchema } from '../../../../Shared/Schemas/UserSchema';
+import UserController from '@User/Infrastructure/HTTP/Controllers/UserController';
+import { CreateUserSchema, DeleteUserSchema, GetMeSchema, GetUserByIdSchema, ListUsersSchema, UpdateUserSchema } from '@Shared/Schemas/UserSchema';
 
 export default async function userRoutes(fastify: FastifyInstance)
 {

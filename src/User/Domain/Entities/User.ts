@@ -1,5 +1,6 @@
-import Base from '../../../Main/Domain/Entities/Base';
-import UserDTO from '../DTOs/UserDTO';
+import Base from "@Main/Domain/Entities/Base";
+import UserDTO from "@User/Domain/DTOs/UserDTO";
+
 
 export default class User extends Base
 {

@@ -6,6 +6,7 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
 
     //Decorators
     "experimentalDecorators": true,
@@ -16,6 +17,17 @@
 
     //Performance improvements
     "skipLibCheck": true,
+    
+    //Aliases configuration
+    "baseUrl": "./src",
+    "paths": {
+      "@AI/*": ["AI/*"],
+      "@Auth/*": ["Auth/*"],
+      "@Cache/*": ["Cache/*"],
+      "@Main/*": ["Main/*"],
+      "@Shared/*": ["Shared/*"],
+      "@User/*": ["User/*"]
+    },
 
     "typeRoots": ["./node_modules/@types", "src/Main/Infrastructure/Types"],
     "types": ["node"] 

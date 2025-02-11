@@ -1,5 +1,5 @@
-import { HTTPError } from '../Errors/HTTPError';
-import { HTTP_STATUS, HTTP_MESSAGES } from './StatusCode';
+import { HTTPError } from '@Shared/Errors/HTTPError';
+import { HTTP_MESSAGES, HTTP_STATUS } from './StatusCode';
 
 export interface ApiResponse<T = any>
 {
