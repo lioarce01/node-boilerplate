@@ -36,7 +36,7 @@ export default abstract class BasePrismaRepository<_T>
     return this.transformer.toDomain(user);
   }
 
-  protected async list(criteria: Criteria): Promise<any>
+  protected async _list(criteria: Criteria): Promise<any>
   {
     const queryOptions = this.applyCriteria(criteria)
     const entityList = await (this.prisma as any)[this.entityName].findMany(queryOptions);

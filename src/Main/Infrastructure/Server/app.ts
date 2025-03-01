@@ -29,7 +29,7 @@ app.setErrorHandler(errorHandler);
 const start = async () =>
 {
   try {
-    await app.listen({ port: APIConfig.PORT });
+    await app.listen({ port: APIConfig.PORT, host: '0.0.0.0' });
     console.log(`Server running on port ${APIConfig.PORT}`);
   }
   catch (err) {
