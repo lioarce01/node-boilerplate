@@ -1,0 +1,41 @@
+services:
+  app:
+    build: .
+    container_name: app-container
+    
+    environment:
+      # - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - REDIS_USERNAME=${REDIS_USERNAME}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPSEEK_BASE_URL=${DEEPSEEK_BASE_URL}
+    # Removemos o ajustamos el volumen para que no sobrescriba el contenido de la imagen
+    # volumes:
+    #   - .:/app
+    ports:
+      - "4000:4000"
+    command: ["pnpm", "start"]
+    depends_on:
+      - redis
+      - mongo
+
+  redis:
+    image: "redis:latest"
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+  mongo:
+    image: "mongo:latest"
+    container_name: mongo-container
+    ports:
+      - "27017:27017"

@@ -19,14 +19,14 @@
     "skipLibCheck": true,
     
     //Aliases configuration
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@AI/*": ["AI/*"],
-      "@Auth/*": ["Auth/*"],
-      "@Cache/*": ["Cache/*"],
-      "@Main/*": ["Main/*"],
-      "@Shared/*": ["Shared/*"],
-      "@User/*": ["User/*"]
+      "@AI/*": ["src/AI/*", "dist/AI/*"],
+      "@Auth/*": ["src/Auth/*", "dist/Auth/*"],
+      "@Cache/*": ["src/Cache/*", "dist/Cache/*"],
+      "@Main/*": ["src/Main/*", "dist/Main/*"],
+      "@Shared/*": ["src/Shared/*", "dist/Shared/*"],
+      "@User/*": ["src/User/*", "dist/User/*"]
     },
 
     "typeRoots": ["./node_modules/@types", "src/Main/Infrastructure/Types"],
